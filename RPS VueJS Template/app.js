@@ -5,7 +5,7 @@ new Vue({
   },
   methods: {
     test: function(){
-      alert("hello");
+      alert("hello world");
     }
   }
 });
