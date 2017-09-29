@@ -24,47 +24,66 @@ new Vue({
     rock: function(){
         var computer = Math.floor((Math.random() * 3) + 1);
 
-        var logMsg = "";
-
         if(computer == 1){
             this.ties++;
             this.gameCount++;
-            logMsg = "COMPUTER CHOSE ROCK | YOU HAVE TIED!";
+            this.log.unshift({
+                msg:"COMPUTER CHOSE ROCK | YOU HAVE TIED!",
+                playertie: true
+            });
+
         }else if(computer == 2){
             this.computerWins++;
             this.gameCount++;
-            logMsg = "COMPUTER CHOSE PAPER | PAPER BEATS ROCK | COMPUTER WINS!";
+
+            this.log.unshift({
+                msg:"COMPUTER CHOSE PAPER | PAPER BEATS ROCK | COMPUTER WINS!",
+                playerwin: false
+            });
+
         }else{
             this.userWins++;
             this.gameCount++;
-            logMsg = "COMPUTER CHOSE SCISSORS | ROCK BEATS SCISSORS | PLAYER WINS!";
-        }
 
-        this.log.push(logMsg);
+            this.log.unshift({
+                msg:"COMPUTER CHOSE SCISSORS | ROCK BEATS SCISSORS | PLAYER WINS!",
+                playerwin: true
+            });
+        }
 
         this.checkWins();
     },
     paper: function(){
-
-        var logMsg = "";
-
+        
         var computer = Math.floor((Math.random() * 3) + 1);
 
         if(computer == 1){
             this.userWins++;
             this.gameCount++;
-            logMsg = "COMPUTER CHOSE ROCK | PAPER BEATS ROCK | PLAYER WINS!";
+
+            this.log.unshift({
+                msg:"COMPUTER CHOSE ROCK | PAPER BEATS ROCK | PLAYER WINS!",
+                playerwin: true
+            });
+
         }else if(computer == 2){
             this.ties++;
             this.gameCount++;
-            logMsg = "COMPUTER CHOSE PAPER | YOU HAVE TIED!";
+
+            this.log.unshift({
+                msg:"COMPUTER CHOSE PAPER | YOU HAVE TIED!",
+                playertie: true
+            });
+
         }else{
             this.computerWins++;
             this.gameCount++;
-            logMsg = "COMPUTER CHOSE SCISSORS | SCISSORS BEATS PAPER | COMPUTER WINS!";
-        }
 
-        this.log.push(logMsg);
+            this.log.unshift({
+                msg:"COMPUTER CHOSE SCISSORS | SCISSORS BEATS PAPER | COMPUTER WINS!",
+                playerwin: false
+            });
+        }
 
         this.checkWins();
 
@@ -76,22 +95,33 @@ new Vue({
         var computer = Math.floor((Math.random() * 3) + 1);
 
         if(computer == 1){
-            logMsg = "COMPUTER CHOSE ROCK | ROCK BEATS SCISSORS | COMPUTER WINS!";
             this.computerWins++;
             this.gameCount++;
+
+            this.log.unshift({
+                msg:"COMPUTER CHOSE ROCK | ROCK BEATS SCISSORS | COMPUTER WINS!",
+                playerwin: false
+            });
+
         }else if(computer == 2){
-            logMsg = "COMPUTER CHOSE PAPER | SCISSORS BEATS ROCK | PLAYER WINS!";
             this.userWins++;
             this.gameCount++;
+
+            this.log.unshift({
+                msg:"COMPUTER CHOSE PAPER | SCISSORS BEATS ROCK | PLAYER WINS!",
+                playerwin: true
+            });
+
         }else{
-            logMsg = "COMPUTER CHOSE SCISSORS | YOU HAVE TIED!";
             this.ties++;
             this.gameCount++;
+
+            this.log.unshift({
+                msg:"COMPUTER CHOSE SCISSORS | YOU HAVE TIED!",
+                playertie: true
+            });
+
         }
-
-        this.log.push(logMsg);
-
-        //alert("user: paper Scissors: " + computer);
 
         this.checkWins();
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>RPS with VueJS</title>
     <script src="https://npmcdn.com/vue/dist/vue.js"></script>
@@ -12,7 +12,7 @@
     <div class="small-6 columns">
       <h1 class="text-center">PLAYER</h1>
       <div class="wins">
-        <div class="wins text-center" style="background-color: green; margin: 0; color: white;">
+        <div class="wins text-center" style="background-color: green; margin: 0; color: white;" :style="{width: userWins + '0%'}">
           {{userWins}}
         </div>
       </div>
@@ -20,7 +20,7 @@
     <div class="small-6 columns">
       <h1 class="text-center">COMPUTER</h1>
       <div class="wins">
-        <div class="wins text-center" style="background-color: green; margin: 0; color: white;">
+        <div class="wins text-center" style="background-color: green; margin: 0; color: white;" :style="{width: computerWins + '0%'}">
           {{computerWins}}
         </div>
       </div>
@@ -42,8 +42,8 @@
   <section class="row log">
     <div class="small-12 columns">
       <ul v-for="(value,key,index) in log">
-        <li>
-          {{value}}
+        <li v-bind:class="{ 'player-turn': value.playerwin, 'computer-turn': !value.playerwin, 'tie-turn': value.playertie }">
+          {{value.msg}}
         </li>
       </ul>
     </div>
