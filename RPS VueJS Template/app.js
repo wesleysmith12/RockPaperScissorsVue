@@ -184,6 +184,10 @@ new Vue({
     },
     rock: function(){
 
+        if(!this.gameStarted){
+            return;
+        }
+
         // record user choice
         this.userMoves.push(1);
 
@@ -192,6 +196,10 @@ new Vue({
     },
     paper: function(){
 
+        if(!this.gameStarted){
+            return;
+        }
+
         // record user choice
         this.userMoves.push(2);
 
@@ -199,6 +207,10 @@ new Vue({
 
     },
     scissors: function(){
+
+        if(!this.gameStarted){
+            return;
+        }
 
         // record user choice
         this.userMoves.push(3);
@@ -244,16 +256,43 @@ new Vue({
     },
     checkHighScore: function(){
 
-        // dont record high scores if they don't pass the first round
+        //dont record high scores if they don't pass the first round
         if(this.computerThrowCount == 1){
             return;
         }
 
-        // check to see if there is a high score
-        if(this.highScoreRounds > this.computerThrowCount || this.highScoreRounds == -1){
-            if(this.gameTime < this.highScoreTime || this.highScoreTime == -1){
-                this.highScoreRounds = this.computerThrowCount;
+        //alert("high score was checked | current/record: " + this.computerThrowCount + "/" + this.highScoreRounds + " | time " + this.highScoreTime);
+
+        if(this.highScoreRounds == -1){
+            this.highScoreRounds = this.computerThrowCount - 1;
+            this.highScoreTime = this.gameTime;
+
+            //alert("first hs");
+
+            // add to log
+            this.log.unshift({
+                msg:"NEW HIGH SCORE | ROUNDS " + (this.highScoreRounds - 1) + " | TIME " + this.highScoreTime.toFixed(2),
+                playertie: true
+            });
+
+        } else if(this.highScoreRounds < this.computerThrowCount){
+            this.highScoreRounds = this.computerThrowCount - 1;
+            this.highScoreTime = this.gameTime;
+
+            //alert("more rounds");
+
+            // add to log
+            this.log.unshift({
+                msg:"NEW HIGH SCORE | ROUNDS " + (this.highScoreRounds - 1) + " | TIME " + this.highScoreTime.toFixed(2),
+                playertie: true
+            });
+
+        } else if(this.highScoreRounds == this.computerThrowCount){
+            if(this.gameTime < this.highScoreTime){
+                this.highScoreRounds = this.computerThrowCount - 1;
                 this.highScoreTime = this.gameTime;
+
+                //alert("same rounds faster time");
 
                 // add to log
                 this.log.unshift({
