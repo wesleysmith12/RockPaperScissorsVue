@@ -158,12 +158,23 @@ new Vue({
         this.updateLog(1);
     },
     updateLog: function(x){
-        if(x == 1){
+
+        if(!this.gameStarted){
+
+            this.log.unshift({
+                msg:"GAME IS OVER | PRESS RESTART TO PLAY AGAIN",
+                playerwin: false
+            });
+
+        }else if(x == 1){
             this.log.unshift({
                 msg:"COMPLETED ROUND " + (this.computerMoves.length -1),
                 playerwin: true
             });
         }else{
+
+            this.gameStarted = false;
+
             this.log.unshift({
                 msg:"GAME OVER | ROUNDS COMPLETED " + (this.computerThrowCount - 1),
                 playerwin: false
