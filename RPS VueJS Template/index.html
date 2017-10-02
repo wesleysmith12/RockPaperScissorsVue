@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <title>RPS with VueJS</title>
+    <title>TWIST OPTION 2</title>
     <script src="https://npmcdn.com/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="css/foundation.min.css">
     <link rel="stylesheet" href="css/app.css">
@@ -12,19 +12,28 @@
     <div class="small-6 columns">
       <h1 class="text-center">PLAYER</h1>
       <div class="wins">
-        <div class="wins text-center" style="background-color: green; margin: 0; color: white;" :style="{width: userWins + '0%'}">
-          {{userWins}}
+        <div v-if="gameStarted" class="wins text-center" style="background-color: green; margin: 0; color: white;" :style="{width: 100*(guessIndex/computerThrowCount) + '%'}">
+          {{guessIndex}}/{{computerThrowCount}}
         </div>
       </div>
     </div>
     <div class="small-6 columns">
       <h1 class="text-center">COMPUTER</h1>
       <div class="wins">
-        <div class="wins text-center" style="background-color: green; margin: 0; color: white;" :style="{width: computerWins + '0%'}">
-          {{computerWins}}
+        <div v-if="gameStarted" class="wins text-center" style="background-color: green; margin: 0; color: white;" :style="{width: 100*(count/computerThrowCount) + '%'}">
+          {{count}}/{{computerThrowCount}}
         </div>
       </div>
     </div>
+  </section>
+  <section id="computerMoves" class="row controls" style="display: none">
+    <span id="numCompleted" class="small-12 columns">
+    </span>
+    <span>
+      <!--<p>Completed {{guessIndex}} / {{computerThrowCount}}</p>-->
+      <p>Computer Throw Number: {{count}}</p>
+      <img id="image" src="" style="height:80px; width:100px">
+    </span>
   </section>
   <section id="startbtn" class="row controls" >
     <div class="small-12 columns">
@@ -40,10 +49,20 @@
     </div>
   </section>
   <section class="row log">
-    <div class="small-12 columns">
+    <div class="small-8 columns">
       <ul v-for="(value,key,index) in log">
         <li v-bind:class="{ 'player-turn': value.playerwin, 'computer-turn': !value.playerwin, 'tie-turn': value.playertie }">
           {{value.msg}}
+        </li>
+      </ul>
+    </div>
+    <div class="small-4 columns">
+      <ul>
+        <li class="tie-turn" v-if="highScoreTime != -1">
+          HighScore: </br>{{highScoreRounds}} rounds in {{highScoreTime.toFixed(2)}} seconds
+        </li>
+        <li class="tie-turn" v-else-if="log.length > 0">
+          HighScore: </br>none
         </li>
       </ul>
     </div>
